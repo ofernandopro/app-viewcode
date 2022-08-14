@@ -129,7 +129,6 @@ class LoginScreen: UIView {
     }
     
     public func validateTextFields() {
-        
         let email: String = self.emailTextField.text ?? ""
         let password: String = self.passwordTextField.text ?? ""
         
@@ -138,7 +137,6 @@ class LoginScreen: UIView {
         } else {
             self.configButtonEnable(false)
         }
-        
     }
     
     private func configButtonEnable(_ enable: Bool) {
@@ -149,6 +147,14 @@ class LoginScreen: UIView {
             self.loginButton.setTitleColor(.lightGray, for: .normal)
             self.loginButton.isEnabled = false
         }
+    }
+    
+    public func getEmail() -> String {
+        return self.emailTextField.text ?? ""
+    }
+    
+    public func getPassword() -> String {
+        return self.passwordTextField.text ?? ""
     }
     
     required init?(coder: NSCoder) {

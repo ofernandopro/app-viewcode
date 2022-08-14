@@ -124,9 +124,9 @@ class RegisterScreen: UIView {
         let password: String = self.passwordTextField.text ?? ""
         
         if !email.isEmpty && !password.isEmpty {
-            self.configButtonEnable(true)
+            //self.configButtonEnable(true)
         } else {
-            self.configButtonEnable(false)
+            //self.configButtonEnable(false)
         }
         
     }
@@ -139,6 +139,14 @@ class RegisterScreen: UIView {
             self.registerButton.setTitleColor(.lightGray, for: .normal)
             self.registerButton.isEnabled = false
         }
+    }
+    
+    public func getEmail() -> String {
+        return self.emailTextField.text ?? ""
+    }
+    
+    public func getPassword() -> String {
+        return self.passwordTextField.text ?? ""
     }
     
     required init?(coder: NSCoder) {
