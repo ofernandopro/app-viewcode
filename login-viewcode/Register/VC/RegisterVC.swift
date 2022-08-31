@@ -7,11 +7,14 @@
 
 import UIKit
 import Firebase
+import FirebaseFirestore
 
 class RegisterVC: UIViewController {
 
     var registerScreen: RegisterScreen?
+    
     var auth: Auth?
+    var firestore: Firestore?
     var alert: Alert?
     
     override func loadView() {
@@ -24,6 +27,7 @@ class RegisterVC: UIViewController {
         self.registerScreen?.delegate(delegate: self)
         self.registerScreen?.configTextFieldDelegate(delegate: self)
         self.auth = Auth.auth()
+        self.firestore = Firestore.firestore()
         self.alert = Alert(controller: self)
     }
 }
@@ -59,6 +63,16 @@ extension RegisterVC: RegisterScreenProtocol {
             if error != nil {
                 self.alert?.getAlert(title: "Atenção", message: "Erro ao cadastrar")
             } else {
+                
+                // Salvar dados no firebase
+                if let idUsuario = result?.user.uid {
+                    self.firestore?.collection("usuarios").document(idUsuario).setData([
+                        "nome": self.registerScreen?.getName() ?? "",
+                        "email": self.registerScreen?.getEmail() ?? "",
+                        "id": idUsuario
+                    ])
+                }
+                
                 self.alert?.getAlert(title: "Tudo Certo!", message: "Sucesso ao cadastrar", completion: {
                     self.navigationController?.popViewController(animated: true) // Voltar pra tela anterior quando o usuário clicar em Ok
                 })
